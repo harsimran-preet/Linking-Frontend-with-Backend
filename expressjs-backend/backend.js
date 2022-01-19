@@ -65,10 +65,12 @@ app.get('/users/:id', (req, res) => {
     }
 });
 
+//Change done
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
+    userToAdd.id = Math.floor(Math.random()*1000000).toString();
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).send(userToAdd).end();
 });
 
 // Implementation to delete a user
@@ -80,15 +82,16 @@ app.delete('/user/:id', (req,res) =>{
     else {
         const del_user = req.body;
         delUser(del_user);
-        res.status(200).end()
+        res.status(204).end()
     }
 
 });
 
 
-
+//Change done
 function delUser(user){
-    return users['users_list'].pop(user);
+    let ind = users['users_list'].findIndex(obj => obj.id == id);
+    return users['users_list'].splice(ind, 1);
 }
 function addUser(user){
     users['users_list'].push(user);
